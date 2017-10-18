@@ -26,12 +26,19 @@ module.exports = {
 				fallback: 'style-loader',
 				use: 'css-loader'
 			})
+		},
+		{
+			test: /\.pug$/,
+			loader: 'pug-loader',
+			options: {
+				pretty: true
+			}
 		}
 	]
   },
   plugins: [
   	new HtmlWebpackPlugin({
-		title: 'Webpack app'
+		template: PATHS.source + '/index.pug'
   	}),
 	new ExtractTextWebpackPlugin('[name].css')
   ]
