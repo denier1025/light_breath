@@ -1,6 +1,12 @@
 const path = require('path');
-const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+/*const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');*/
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const merge = require('webpack-merge');
+const pug = require('./webpack/loaders/pug');
+const css = require('./webpack/loaders/css');
+const babel = require('./webpack/loaders/babel');
+const devserver = require('./webpack/devserver');
+const scss = require('./webpack/loaders/scss');
 
 const PATHS = {
 	source: path.join(__dirname, 'src'),
@@ -18,25 +24,9 @@ const common = {
   },
   module: {
     rules: [
-		{ 
-			test: /\.js$/, 
-			use: 'babel-loader',
-			exclude: /node_modules/
-		},
-		{
-			test: /\.css$/,
-			use: ExtractTextWebpackPlugin.extract({
-				fallback: 'style-loader',
-				use: 'css-loader'
-			})
-		},
-		{
-			test: /\.pug$/,
-			loader: 'pug-loader',
-			options: {
-				pretty: true
-			}
-		}
+		babel(),
+        scss(),
+		pug()
 	]
   },
   plugins: [
@@ -49,16 +39,9 @@ const common = {
         filename: 'blog.html',
         chunks: ['blog'],
         template: PATHS.source + '/pages/blog/blog.pug'
-    }),
-	new ExtractTextWebpackPlugin('[name].css')
+    })/*,
+	new ExtractTextWebpackPlugin('[name].css')*/
     ]
-};
-
-const developmentConfig = {
-    devServer: {
-        stats: 'errors-only',
-		port: 9000
-    }
 };
 
 module.exports = function(env) {
@@ -66,6 +49,6 @@ module.exports = function(env) {
 		return common;
 	}
 	if(env === 'development') {
-		return Object.assign(common, developmentConfig);
+		return merge([common, devserver()]);
 	}
 };
