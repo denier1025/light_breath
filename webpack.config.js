@@ -7,7 +7,7 @@ const PATHS = {
 	build: path.join(__dirname, 'dist')
 };
 
-module.exports = {
+const common = {
   entry: {
       'index': PATHS.source + '/pages/index/index.js',
       'blog': PATHS.source + '/pages/blog/blog.js'
@@ -51,5 +51,21 @@ module.exports = {
         template: PATHS.source + '/pages/blog/blog.pug'
     }),
 	new ExtractTextWebpackPlugin('[name].css')
-  ]
+    ]
+};
+
+const developmentConfig = {
+    devServer: {
+        stats: 'errors-only',
+		port: 9000
+    }
+};
+
+module.exports = function(env) {
+	if(env === 'production') {
+		return common;
+	}
+	if(env === 'development') {
+		return Object.assign(common, developmentConfig);
+	}
 };
