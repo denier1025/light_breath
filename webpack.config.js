@@ -9,6 +9,7 @@ const devserver = require('./webpack/devserver');
 const scss = require('./webpack/loaders/scss');
 const extractCSS = require('./webpack/loaders/css.extract');
 const uglifyJS = require('./webpack/plugins/js.uglify');
+const images = require('./webpack/loaders/images');
 
 const PATHS = {
 	source: path.join(__dirname, 'src'),
@@ -46,7 +47,8 @@ const common = merge([
         ]
     },
     babel(),
-    pug()
+    pug(),
+    images()
 ]);
 
 module.exports = function(env) {
