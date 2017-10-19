@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "My new world",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "normalize.css": "^7.0.0"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.2",

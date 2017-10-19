@@ -1,11 +1,13 @@
-const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
-
-module.exports = function() {
+module.exports = function(paths) {
     return {
-        test: /\.css$/,
-        use: ExtractTextWebpackPlugin.extract({
-            fallback: 'style-loader',
-            use: 'css-loader'
-        })
+        module: {
+            rules: [
+                {
+                    test: /\.css$/,
+                    include: paths,
+                    use: ['style-loader', 'css-loader']
+                }
+            ]
+        }
     }
 }
