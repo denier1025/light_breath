@@ -8,6 +8,7 @@ const babel = require('./webpack/loaders/babel');
 const devserver = require('./webpack/devserver');
 const scss = require('./webpack/loaders/scss');
 const extractCSS = require('./webpack/loaders/css.extract');
+const uglifyJS = require('./webpack/plugins/js.uglify');
 
 const PATHS = {
 	source: path.join(__dirname, 'src'),
@@ -52,7 +53,8 @@ module.exports = function(env) {
 	if(env === 'production') {
 		return merge([
 		    common,
-            extractCSS()
+            extractCSS(),
+            uglifyJS()
         ]);
 	}
 	if(env === 'development') {
